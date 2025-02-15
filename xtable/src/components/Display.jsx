@@ -10,15 +10,24 @@ const Display = () => {
   ];
 
   const [filterTable, setFilterTable] = useState(tableData);
-  const handleDate = () => {};
-  const handeViews = () => {};
+  const sortByDate = () => {
+    const dateData = [...filterTable].sort(
+      (a, b) => new Date(b.date) - new Date(a.date)
+    );
+    setFilterTable(dateData);
+  };
+  const sortByViews = () => {
+    const viewsData = [...filterTable].sort((a, b) => b.views - a.views);
+    setFilterTable(viewsData);
+  };
+  let i = 1;
   return (
     <>
       <h1>Date and Views Table</h1>
-      <button type="button" onClick={handleDate}>
+      <button type="button" onClick={sortByDate}>
         Sort by Date
       </button>
-      <button type="button" onClick={handeViews}>
+      <button type="button" onClick={sortByViews}>
         Sort by Views
       </button>
       <table>
@@ -30,9 +39,9 @@ const Display = () => {
           </tr>
         </thead>
         <tbody>
-          {tableData.map((data) => {
+          {filterTable.map((data) => {
             return (
-              <tr>
+              <tr key={i++}>
                 <td>{data.date}</td>
                 <td>{data.views}</td>
                 <td>{data.article}</td>
